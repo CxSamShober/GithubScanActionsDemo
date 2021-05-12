@@ -1,20 +1,6 @@
-# This workflow is to automate Checkmarx SAST scans.  It runs on a push to the main branch.
-#
-# The following GitHub Secrets must be first defined:
-#   - CHECKMARX_URL
-#   - CHECKMARX_USER
-#   - CHECKMARX_PASSWORD
-#   - CHECKMARX_CLIENT_SECRET
-#
-# The following variables must be inserted below:
-#   - <ProjectName>
-#
-# Update the 'team' field to reflect the team name used in Checkmarx.
-#
-# For full documentation, including a list of all inputs, please refer to the README https://github.com/checkmarx-ts/checkmarx-cxflow-github-action
-
 name: Checkmarx SAST Scan
 on:
+  pull_request:
   push:
     branches:
       - main
@@ -29,16 +15,12 @@ jobs:
     - name: Checkmarx CxFlow Action
       uses: checkmarx-ts/checkmarx-cxflow-github-action@v1.1 #Github Action version
       with:
-        project: SamShober-GithubScanActionsDemo # <-- Insert Checkmarx SAST Project Name
+        project: GitHubScanActionsDemo-Action # <-- Insert Checkmarx SAST Project Name
         team: /CxServer # default is /CxServer/SP/Company
-        checkmarx_url: https://sls-routing.ngrok.io  # default is 
-        checkmarx_username: admin   # To be stored in GitHub Secrets.
-        checkmarx_password: Cx!234567 # To be stored in GitHub Secrets.
-        checkmarx_client_secret: 014DF517-39D1-4453-B7B3-9930C563627C # To be stored in GitHub Secrets.
-        #checkmarx_url: ${{ secrets.CHECKMARX_URL }}  # default is 
-        #checkmarx_username: ${{ secrets.CHECKMARX_USER }}   # To be stored in GitHub Secrets.
-        #checkmarx_password: ${{ secrets.CHECKMARX_PASSWORD }} # To be stored in GitHub Secrets.
-        #checkmarx_client_secret: ${{ secrets.CHECKMARX_CLIENT_SECRET }} # To be stored in GitHub Secrets.
+        checkmarx_url: ${{ secrets.CHECKMARX_URL }}  # default is 
+        checkmarx_username: ${{ secrets.CHECKMARX_USERNAME }}   # To be stored in GitHub Secrets.
+        checkmarx_password: ${{ secrets.CHECKMARX_PASSWORD }} # To be stored in GitHub Secrets.
+        checkmarx_client_secret: ${{ secrets.CHECKMARX_CLIENT_SECRET }} # To be stored in GitHub Secrets.
         break_build: false
         scanners: sast #,sca  #should look like scanners: sast, sca and uncomment scan secrets 
         bug_tracker: Sarif
@@ -58,4 +40,3 @@ jobs:
       uses: github/codeql-action/upload-sarif@v1
       with:
         sarif_file: cx.sarif
-
