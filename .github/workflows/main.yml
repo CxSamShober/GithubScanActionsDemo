@@ -1,7 +1,7 @@
 name: Checkmarx SAST Scan on PR
 on:
   pull_request:
-  push:
+  #push:
     branches:
       - main
       - master
