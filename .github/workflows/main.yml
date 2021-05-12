@@ -1,4 +1,4 @@
-name: Checkmarx SAST Scan on PR
+name: Checkmarx SAST Scan
 on:
   pull_request:
   #push:
